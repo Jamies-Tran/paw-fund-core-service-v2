@@ -2,9 +2,9 @@ spring:
   jackson:
     serialization:
       write-date-keys-as-timestamps: false
-    date-time-format: yyyy-MM-dd'T'HH:mm:ss.SSSZ
+    date-time-format: ${JACKSON_DATE_FORMAT}
   application:
-    name: paw-fund-core-service
+    name: ${APPLICATION_NAME}
   main:
     allow-circular-references: true
   datasource:
@@ -35,20 +35,20 @@ spring:
 
 app:
   access-token:
-    secret-key: ftoLRVxHq82BzLq3stXhnOJRo4azrVab
-    expired-duration: 4320
+    secret-key: ${SECRET_KEY}
+    expired-duration: ${ACCESS_TOKEN_EXPIRED}
   refresh-token:
-    expired-duration: 4320
+    expired-duration: ${REFRESH_TOKEN_EXPIRED}
   mail:
-    username: brokenstar2197@gmail.com
+    username: ${MAIL_USERNAME}
     smtp:
-      password: kqwb ipyc gkeh ligm
+      password: ${MAIL_SMTP_PASS}
   goong:
-    key: gMs7uHEjx646z9dVVjrh60fRPMADssbjc2Z7KYd1
-    domain: https://rsapi.goong.io
-    autocomplete: /Place/AutoComplete
-    geocode: /geocode
+    key: ${GOONG_KEY}
+    domain: ${GOONG_DOMAIN}
+    autocomplete: ${GOONG_AUTOCOMPLETE}
+    geocode: ${GOONG_GEOCODEs}
 
 paw:
   verification:
-    duration: 15
+    duration: ${PAW_VERIFICATION_DURATION}
