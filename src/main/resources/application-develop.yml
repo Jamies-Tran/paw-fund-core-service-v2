@@ -8,10 +8,9 @@ spring:
   main:
     allow-circular-references: true
   datasource:
-    datasource:
-      url: ${DB_CONNECTION_STRING}
-      username: ${DB_USERNAME}
-      password: ${DB_PASSWORD}
+    url: ${DB_CONNECTION_STRING}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
   jpa:
     show-sql: true
     hibernate:
