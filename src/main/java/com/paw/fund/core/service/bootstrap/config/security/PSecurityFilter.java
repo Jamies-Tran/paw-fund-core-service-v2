@@ -37,10 +37,9 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class PSecurityFilter extends OncePerRequestFilter {
-    @NonNull
     PTokenUtils tokenUtil;
 
-    @NonNull
+
     PUserDetailsService userDetailsService;
 
 
