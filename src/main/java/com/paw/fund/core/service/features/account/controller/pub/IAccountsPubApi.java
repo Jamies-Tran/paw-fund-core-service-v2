@@ -2,12 +2,11 @@ package com.paw.fund.core.service.features.account.controller.pub;
 
 import com.paw.fund.core.service.bootstrap.config.rest.PValueResponse;
 import com.paw.fund.core.service.features.account.controller.models.AccountRequest;
+import com.paw.fund.core.service.features.account.controller.models.UpdatePasswordRequest;
 import com.paw.fund.core.service.features.account.controller.models.UpdateStatusRequest;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,4 +26,7 @@ public interface IAccountsPubApi {
 
     @PatchMapping("/in-active")
     PValueResponse<?> inactive(@RequestBody @Valid UpdateStatusRequest updateStatusRequest);
+
+    @PatchMapping("/change-password")
+    PValueResponse<?> changePassword(@RequestBody @Valid UpdatePasswordRequest updatePasswordRequest);
 }

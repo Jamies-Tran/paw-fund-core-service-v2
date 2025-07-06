@@ -1,6 +1,7 @@
 package com.paw.fund.core.service.features.account.service;
 
 import com.paw.fund.core.service.domain.account.Account;
+import com.paw.fund.core.service.domain.verification.enums.EVerificationType;
 import com.paw.fund.core.service.features.account.repository.database.IAccountMapper;
 import com.paw.fund.core.service.features.account.repository.database.IAccountRepository;
 import lombok.AccessLevel;
@@ -24,7 +25,7 @@ public class AccountQueryService {
     }
 
     protected Boolean verifyCode(String verificationCode) {
-        return repository.existsByVerificationCode(verificationCode);
+        return repository.existsByVerificationCode(verificationCode, EVerificationType.ACCOUNT_CREATION);
     }
 
     protected Optional<Account> findById(Long accountId) {

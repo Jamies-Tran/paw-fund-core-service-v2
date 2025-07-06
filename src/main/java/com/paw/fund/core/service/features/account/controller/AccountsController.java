@@ -4,6 +4,7 @@ import com.paw.fund.core.service.bootstrap.config.rest.PValueResponse;
 import com.paw.fund.core.service.domain.account.IAccountUseCase;
 import com.paw.fund.core.service.domain.role.enums.ERole;
 import com.paw.fund.core.service.features.account.controller.models.AccountRequest;
+import com.paw.fund.core.service.features.account.controller.models.VerificationRequest;
 import com.paw.fund.core.service.features.account.controller.models.mapper.IAccountRequestModelMapper;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -23,5 +24,12 @@ public class AccountsController implements IAccountsApi {
         Long accountId = accountUseCase.save(modelMapper.toDto(accountRequest), ERole.SHELTER_OWNER);
 
         return PValueResponse.success(accountId);
+    }
+
+    @Override
+    public PValueResponse<?> updateEmail(VerificationRequest verificationRequest) {
+        accountUseCase.updateEmail(verificationRequest.verification());
+
+        return PValueResponse.successNoData();
     }
 }

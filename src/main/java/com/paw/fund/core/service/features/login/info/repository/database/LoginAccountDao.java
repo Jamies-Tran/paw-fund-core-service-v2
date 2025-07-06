@@ -5,5 +5,7 @@ public interface LoginAccountDao {
 
     String getEmail();
 
+    String getPassword();
+
     String getStatusCode();
 }

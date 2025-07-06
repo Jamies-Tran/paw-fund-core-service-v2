@@ -8,11 +8,10 @@ import java.time.LocalDateTime;
 public record Verification(
         Long verificationCodeId,
         Long accountId,
-        String newEmail,
+        String dataHolder,
         String code,
         String typeCode,
         String typeName,
-        Boolean isUsed,
         LocalDateTime expiredAt
 ) {
 }

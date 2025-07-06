@@ -2,9 +2,11 @@ package com.paw.fund.core.service.features.account.controller;
 
 import com.paw.fund.core.service.bootstrap.config.rest.PValueResponse;
 import com.paw.fund.core.service.features.account.controller.models.AccountRequest;
+import com.paw.fund.core.service.features.account.controller.models.VerificationRequest;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -18,4 +20,7 @@ public interface IAccountsApi {
             @RequestBody @Valid AccountRequest accountRequest,
             @PathVariable("shelterId") Long shelterId
     );
+
+    @PatchMapping("/change-email")
+    PValueResponse<?> updateEmail(@RequestBody @Valid VerificationRequest verificationRequest);
 }

@@ -1,5 +1,6 @@
 package com.paw.fund.core.service.features.mail.service;
 
+import com.paw.fund.core.service.bootstrap.config.handler.exception.PResourceNotValid;
 import com.paw.fund.core.service.domain.mail.IMailUseCase;
 import com.paw.fund.core.service.domain.mail.MailEventListener;
 import jakarta.mail.MessagingException;
@@ -29,18 +30,18 @@ public class MailUseCaseService implements IMailUseCase {
         try {
             MimeMessage mimeMessage = javaMailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true);
+            MailEventListener validateAccount;
             switch (eventListener.getMailType()) {
-                case VALIDATE_ACCOUNT -> {
-                    MailEventListener validateAccount = eventListener.validateAccount();
-                    helper.setFrom(new InternetAddress(validateAccount.getFrom(), "Paw Fund"));
-                    helper.setSubject(validateAccount.getSubject());
-                    helper.setTo(validateAccount.getTo());
-                    helper.setText(validateAccount.getBody(), true);
-                    helper.setSentDate(new Date());
-                }
+                case VALIDATE_ACCOUNT -> validateAccount = eventListener.validateAccount();
+                case CHANGE_PASSWORD -> validateAccount = eventListener.changePassword();
+                case CHANGE_EMAIL -> validateAccount = eventListener.changeEmail();
+                default -> throw new PResourceNotValid();
             }
-
-
+            helper.setFrom(new InternetAddress(validateAccount.getFrom(), "Paw Fund"));
+            helper.setSubject(validateAccount.getSubject());
+            helper.setTo(validateAccount.getTo());
+            helper.setText(validateAccount.getBody(), true);
+            helper.setSentDate(new Date());
             javaMailSender.send(mimeMessage);
 
         } catch (MessagingException | UnsupportedEncodingException e) {

@@ -5,6 +5,7 @@ import com.paw.fund.core.service.domain.account.IAccountUseCase;
 import com.paw.fund.core.service.domain.account.enums.EAccountStatus;
 import com.paw.fund.core.service.domain.role.enums.ERole;
 import com.paw.fund.core.service.features.account.controller.models.AccountRequest;
+import com.paw.fund.core.service.features.account.controller.models.UpdatePasswordRequest;
 import com.paw.fund.core.service.features.account.controller.models.UpdateStatusRequest;
 import com.paw.fund.core.service.features.account.controller.models.mapper.IAccountRequestModelMapper;
 import lombok.AccessLevel;
@@ -53,6 +54,13 @@ public class AccountsPubController implements IAccountsPubApi {
                 updateStatusRequest.email(),
                 EAccountStatus.INACTIVE
         );
+
+        return PValueResponse.successNoData();
+    }
+
+    @Override
+    public PValueResponse<?> changePassword(UpdatePasswordRequest updatePasswordRequest) {
+        accountUseCase.updatePassword(updatePasswordRequest.verificationCode(), updatePasswordRequest.newPassword());
 
         return PValueResponse.successNoData();
     }

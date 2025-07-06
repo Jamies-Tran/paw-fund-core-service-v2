@@ -10,6 +10,7 @@ import java.util.List;
 public record LoginAccount(
         Long accountId,
         String email,
+        String password,
         String statusCode,
         @With List<Role> roles
 ) {

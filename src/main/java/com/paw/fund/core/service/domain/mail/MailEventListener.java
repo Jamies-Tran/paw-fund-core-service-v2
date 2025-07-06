@@ -37,7 +37,29 @@ public class MailEventListener extends ApplicationEvent {
 
     public MailEventListener validateAccount() {
         String subject = "[PAWFUND] - Mã xác nhận tài khoản";
-        String body = "<html><body><h2>Xác nhận tài khoản của bạn</h2><p>Chào bạn,</p><p>Mã xác nhận của bạn là:</p><h1 style='color: #007bff;'> %s </h1><p>Mã này có hiệu lực trong 15 phút.</p><p>Nếu bạn không yêu cầu, vui lòng bỏ qua email này.</p><br><p>Trân trọng,<br><strong>PawFund</strong></p></body></html>"
+        String body = "<html><body><h2>Xác nhận tài khoản</h2><p>Chào bạn,</p><p>Mã xác nhận của bạn là:</p><h1 style='color: #007bff;'> %s </h1><p>Mã này có hiệu lực trong 15 phút.</p><p>Nếu bạn không yêu cầu, vui lòng bỏ qua email này.</p><br><p>Trân trọng,<br><strong>PawFund</strong></p></body></html>"
+                .formatted(this.getContent());
+
+        this.setSubject(subject);
+        this.setBody(body);
+
+        return this;
+    }
+
+    public MailEventListener changePassword() {
+        String subject = "[PAWFUND] - Mã xác nhận thay đổi mật khẩu";
+        String body = "<html><body><h2>Xác nhận thay đổi mật khẩu</h2><p>Chào bạn,</p><p>Mã xác nhận của bạn là:</p><h1 style='color: #007bff;'> %s </h1><p>Mã này có hiệu lực trong 15 phút.</p><p>Nếu bạn không yêu cầu, vui lòng bỏ qua email này.</p><br><p>Trân trọng,<br><strong>PawFund</strong></p></body></html>"
+                .formatted(this.getContent());
+
+        this.setSubject(subject);
+        this.setBody(body);
+
+        return this;
+    }
+
+    public MailEventListener changeEmail() {
+        String subject = "[PAWFUND] - Mã xác nhận thay đổi email";
+        String body = "<html><body><h2>Xác nhận thay đổi email</h2><p>Chào bạn,</p><p>Mã xác nhận của bạn là:</p><h1 style='color: #007bff;'> %s </h1><p>Mã này có hiệu lực trong 15 phút.</p><p>Nếu bạn không yêu cầu, vui lòng bỏ qua email này.</p><br><p>Trân trọng,<br><strong>PawFund</strong></p></body></html>"
                 .formatted(this.getContent());
 
         this.setSubject(subject);

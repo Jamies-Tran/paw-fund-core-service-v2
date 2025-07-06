@@ -3,9 +3,11 @@ package com.paw.fund.core.service.features.account.service;
 import com.paw.fund.core.service.bootstrap.config.handler.exception.PResourceDuplicateException;
 import com.paw.fund.core.service.bootstrap.config.handler.exception.PResourceNotFoundException;
 import com.paw.fund.core.service.bootstrap.utils.PObjectUtils;
+import com.paw.fund.core.service.bootstrap.utils.PPasswordEncoder;
 import com.paw.fund.core.service.domain.account.Account;
-import com.paw.fund.core.service.domain.account.AccountPrivateService;
+import com.paw.fund.core.service.domain.account.AccountQueryPrivateService;
 import com.paw.fund.core.service.domain.account.enums.EAccountStatus;
+import com.paw.fund.core.service.domain.verification.enums.EVerificationType;
 import com.paw.fund.core.service.features.account.repository.database.AccountEntity;
 import com.paw.fund.core.service.features.account.repository.database.IAccountMapper;
 import com.paw.fund.core.service.features.account.repository.database.IAccountRepository;
@@ -18,7 +20,7 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-public class AccountCommandService extends AccountPrivateService {
+public class AccountCommandService extends AccountQueryPrivateService {
     IAccountRepository repository;
 
     IAccountMapper mapper;
@@ -55,6 +57,34 @@ public class AccountCommandService extends AccountPrivateService {
                 );
     }
 
+    protected void updatePassword(@NonNull String verificationCode, @NonNull String newPassword) {
+        repository.findByVerificationCode(verificationCode, EVerificationType.CHANGE_PASSWORD)
+                .ifPresentOrElse(
+                        account -> {
+                            account.setPassword(PPasswordEncoder.passwordEncoder().encode(newPassword));
+                            repository.save(account);
+                        },
+                        PResourceNotFoundException::new
+                );
+    }
+
+    protected void updateEmail(@NonNull String verificationCode) {
+        repository.findDataHolderByVerificationCode(verificationCode)
+                .ifPresentOrElse(
+                        accVerification -> {
+                            repository.findById(accVerification.getAccountId())
+                                    .ifPresentOrElse(
+                                            account -> {
+                                                account.setEmail(accVerification.getDataHolder());
+                                                repository.save(account);
+                                            },
+                                            PResourceNotFoundException::new
+                                    );
+                        },
+                        PResourceNotFoundException::new
+                );
+    }
+
     @Override
     protected void validateSave(Account account) {
         if(repository.existsByEmail(account.email())) {
@@ -69,6 +99,8 @@ public class AccountCommandService extends AccountPrivateService {
             throw new PResourceDuplicateException("CCCD đã tồn tại");
         }
     }
+
+
 
     @Override
     protected void validateUpdate(AccountEntity foundAccount, Account account) {

@@ -12,6 +12,7 @@ public interface ILoginInfoRepository extends JpaRepository<LoginInfoEntity, Lon
         SELECT 
             a.accountId AS accountId,
             a.email AS email,
+            a.password AS password,
             a.statusCode AS statusCode
         FROM AccountEntity a
         WHERE a.email = :email

@@ -11,6 +11,7 @@ import com.paw.fund.core.service.domain.relation.account.role.AccountRoleEventLi
 import com.paw.fund.core.service.domain.role.IRoleUseCase;
 import com.paw.fund.core.service.domain.role.Role;
 import com.paw.fund.core.service.domain.role.enums.ERole;
+import com.paw.fund.core.service.domain.verification.VerificationDeleteEventListener;
 import lombok.AccessLevel;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -58,6 +59,7 @@ public class AccountUseCaseService implements IAccountUseCase {
     }
 
     @Override
+    @Transactional
     public Long save(@NonNull Account account, @NonNull ERole role) {
         Long accountId = commandService.save(account);
 
@@ -109,11 +111,35 @@ public class AccountUseCaseService implements IAccountUseCase {
             throw new PResourceNotFoundException("Mã xác nhận không đúng!");
         }
         commandService.updateStatus(email, status);
+        publisher.publishEvent(new VerificationDeleteEventListener(
+                this,
+                verificationCode
+        ));
     }
 
     @Override
     @Transactional
     public void update(@NonNull Long accountId, @NonNull Account account) {
         commandService.update(accountId, account);
+    }
+
+    @Override
+    @Transactional
+    public void updatePassword(@NonNull String verificationCode, @NonNull String newPassword) {
+        commandService.updatePassword(verificationCode, newPassword);
+        publisher.publishEvent(new VerificationDeleteEventListener(
+                this,
+                verificationCode
+        ));
+    }
+
+    @Override
+    @Transactional
+    public void updateEmail(@NonNull String verificationCode) {
+        commandService.updateEmail(verificationCode);
+        publisher.publishEvent(new VerificationDeleteEventListener(
+                this,
+                verificationCode
+        ));
     }
 }

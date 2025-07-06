@@ -20,12 +20,6 @@ public record AccountRequest(
         String firstName,
 
 
-        @Schema(
-                example = "test"
-        )
-        String avatar,
-
-
         @NotNull(
                 message = "Vui lập nhập tên"
         )
@@ -34,6 +28,10 @@ public record AccountRequest(
         )
         String lastName,
 
+        @Schema(
+                example = "test"
+        )
+        String avatar,
 
         @NotNull(
                 message = "Vui lập nhập số cccd"

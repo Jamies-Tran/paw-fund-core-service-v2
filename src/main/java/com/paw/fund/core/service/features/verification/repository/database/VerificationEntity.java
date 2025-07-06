@@ -31,20 +31,17 @@ public class VerificationEntity extends Auditor {
     @Column
     Long accountId;
 
-    @Column
+    @Column(unique = true)
     String code;
 
     @Column
-    String newEmail;
+    String dataHolder;
 
     @Column
     String typeCode;
 
     @Column
     String typeName;
-
-    @Column
-    Boolean isUsed;
 
     @Column
     LocalDateTime expiredAt;

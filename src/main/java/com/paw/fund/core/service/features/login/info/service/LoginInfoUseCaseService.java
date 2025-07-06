@@ -1,7 +1,9 @@
 package com.paw.fund.core.service.features.login.info.service;
 
+import com.paw.fund.core.service.bootstrap.config.handler.exception.PAuthenticationException;
 import com.paw.fund.core.service.bootstrap.config.handler.exception.PResourceNotFoundException;
 import com.paw.fund.core.service.bootstrap.utils.PObjectUtils;
+import com.paw.fund.core.service.bootstrap.utils.PPasswordEncoder;
 import com.paw.fund.core.service.bootstrap.utils.PTokenUtils;
 import com.paw.fund.core.service.domain.account.enums.EAccountStatus;
 import com.paw.fund.core.service.domain.login.info.ILoginInfoUseCase;
@@ -28,7 +30,7 @@ import java.util.UUID;
 @Service
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-public class LoginUseCaseService implements ILoginInfoUseCase {
+public class LoginInfoUseCaseService implements ILoginInfoUseCase {
     LoginInfoCommandService commandService;
 
     LoginInfoQueryService queryService;
@@ -49,6 +51,9 @@ public class LoginUseCaseService implements ILoginInfoUseCase {
                 .orElseThrow(PResourceNotFoundException::new);
         if (!PObjectUtils.isEqual(EAccountStatus.ACTIVE.getCode(), loginAccount.statusCode())) {
             throw new PResourceNotFoundException("Tài khoản chưa được kích hoạt");
+        }
+        if (!PPasswordEncoder.passwordEncoder().matches(password, loginAccount.password())) {
+            throw new PAuthenticationException("Xác nhận tài khoản thất bại");
         }
         List<Role> roles = roleUseCase.findAllByAccountId(loginAccount.accountId());
         String accessToken = tokenUtil.generateAccessToken(loginAccount.email());
