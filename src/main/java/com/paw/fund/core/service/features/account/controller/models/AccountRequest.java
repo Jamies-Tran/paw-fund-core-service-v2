@@ -33,9 +33,7 @@ public record AccountRequest(
         )
         String avatar,
 
-        @NotNull(
-                message = "Vui lập nhập số cccd"
-        )
+
         @Length(
                 message = "Số CCCD phải có ít nhất 12 ký tự số",
                 min = 12
@@ -91,19 +89,11 @@ public record AccountRequest(
         )
         LocalDate dateOfBirth,
 
-
-        @NotNull(
-                message = "Vui lòng chọn thông tin giới tính"
-        )
         @Schema(
                 example = "MALE"
         )
         String genderCode,
 
-
-        @NotNull(
-                message = "Vui lòng chọn thông tin giới tính"
-        )
         @Schema(
                 example = "Nam"
         )
