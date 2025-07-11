@@ -23,6 +23,6 @@ public class PObjectUtils {
     }
 
     public static  <T>List<T> defaultList(List<T> list ) {
-        return Optional.of(list).orElse(new ArrayList<>());
+        return Optional.ofNullable(list).orElse(new ArrayList<>());
     }
 }

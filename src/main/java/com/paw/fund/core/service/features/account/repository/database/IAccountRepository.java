@@ -9,11 +9,11 @@ import java.util.Optional;
 
 @Repository
 public interface IAccountRepository extends JpaRepository<AccountEntity, Long> {
-    Boolean existsByEmail(String email);
+    Boolean existsByEmailAndEmailNotNull(String email);
 
-    Boolean existsByPhone(String phone);
+    Boolean existsByPhoneAndPhoneNotNull(String phone);
 
-    Boolean existsByIdentification(String identification);
+    Boolean existsByIdentificationAndIdentificationNotNull(String identification);
 
     @Query("""
         SELECT 

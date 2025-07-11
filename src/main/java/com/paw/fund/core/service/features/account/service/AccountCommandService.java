@@ -87,15 +87,15 @@ public class AccountCommandService extends AccountQueryPrivateService {
 
     @Override
     protected void validateSave(Account account) {
-        if(repository.existsByEmail(account.email())) {
+        if(repository.existsByEmailAndEmailNotNull(account.email())) {
             throw new PResourceDuplicateException("Email đã tồn tại");
         }
 
-        if(repository.existsByPhone(account.phone())) {
+        if(repository.existsByPhoneAndPhoneNotNull(account.phone())) {
             throw new PResourceDuplicateException("Số điện thoại đã tồn tại");
         }
 
-        if(repository.existsByIdentification(account.identification())) {
+        if(repository.existsByIdentificationAndIdentificationNotNull(account.identification())) {
             throw new PResourceDuplicateException("CCCD đã tồn tại");
         }
     }
@@ -105,17 +105,17 @@ public class AccountCommandService extends AccountQueryPrivateService {
     @Override
     protected void validateUpdate(AccountEntity foundAccount, Account account) {
         if(PObjectUtils.isNotEqual(foundAccount.getEmail(), account.email())
-                && repository.existsByEmail(account.email())) {
+                && repository.existsByEmailAndEmailNotNull(account.email())) {
             throw new PResourceDuplicateException("Email đã tồn tại");
         }
 
         if(PObjectUtils.isNotEqual(foundAccount.getPhone(), account.phone())
-                && repository.existsByPhone(account.phone())) {
+                && repository.existsByPhoneAndPhoneNotNull(account.phone())) {
             throw new PResourceDuplicateException("Số điện thoại đã tồn tại");
         }
 
         if(PObjectUtils.isNotEqual(foundAccount.getIdentification(), account.identification())
-                && repository.existsByIdentification(account.identification())) {
+                && repository.existsByIdentificationAndIdentificationNotNull(account.identification())) {
             throw new PResourceDuplicateException("CCCD đã tồn tại");
         }
     }

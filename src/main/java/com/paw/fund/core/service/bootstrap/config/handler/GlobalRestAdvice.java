@@ -1,7 +1,6 @@
 package com.paw.fund.core.service.bootstrap.config.handler;
 
 import com.paw.fund.core.service.bootstrap.config.handler.exception.EErrorCode;
-import com.paw.fund.core.service.bootstrap.config.handler.exception.PAccessTokenExpireException;
 import com.paw.fund.core.service.bootstrap.config.handler.exception.PAuthenticationException;
 import com.paw.fund.core.service.bootstrap.config.handler.exception.PResourceDuplicateException;
 import com.paw.fund.core.service.bootstrap.config.handler.exception.PResourceNotFoundException;
@@ -19,6 +18,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @RestControllerAdvice
 @FieldDefaults(level = AccessLevel.PRIVATE)
@@ -41,10 +41,9 @@ public class GlobalRestAdvice {
             errors.put("message", fieldError.getDefaultMessage());
         }
         return PValueResponse.error(
-                errors,
                 HttpStatus.BAD_REQUEST.getReasonPhrase(),
                 EErrorCode.RESOURCE_VALIDATE_FAIL.getCode(),
-                exc.getMessage());
+                String.join(",", errors.values()));
     }
 
     @ResponseStatus(HttpStatus.CONFLICT)

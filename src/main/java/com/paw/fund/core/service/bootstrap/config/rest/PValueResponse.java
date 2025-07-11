@@ -19,7 +19,7 @@ public record PValueResponse<T> (
                 .data(data)
                 .status(String.valueOf(HttpStatus.OK.value()))
                 .success(true)
-                .message("Completed!")
+                .message("Dịch vụ đã được thực hiện")
                 .responseAt(LocalDateTime.now())
                 .build();
     }
@@ -29,7 +29,7 @@ public record PValueResponse<T> (
                 .data(null)
                 .status(String.valueOf(HttpStatus.OK.value()))
                 .success(true)
-                .message("Completed!")
+                .message("Dịch vụ đã được thực hiện")
                 .responseAt(LocalDateTime.now())
                 .build();
     }
@@ -40,22 +40,6 @@ public record PValueResponse<T> (
             String message
     ) {
         return PValueResponse.builder()
-                .status(status)
-                .success(false)
-                .message(message)
-                .errorCode(errorCode)
-                .responseAt(LocalDateTime.now())
-                .build();
-    }
-
-    public static <T> PValueResponse error(
-            T data,
-            String status,
-            String errorCode,
-            String message
-    ) {
-        return PValueResponse.builder()
-                .data(data)
                 .status(status)
                 .success(false)
                 .message(message)
