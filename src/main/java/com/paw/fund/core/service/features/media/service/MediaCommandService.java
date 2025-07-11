@@ -1,5 +1,6 @@
 package com.paw.fund.core.service.features.media.service;
 
+import com.paw.fund.core.service.bootstrap.utils.PObjectUtils;
 import com.paw.fund.core.service.domain.media.Media;
 import com.paw.fund.core.service.features.media.repository.database.IMediaMapper;
 import com.paw.fund.core.service.features.media.repository.database.IMediaRepository;
@@ -19,7 +20,8 @@ public class MediaCommandService {
     IMediaMapper mapper;
 
     void saveAll(Long accountId, List<Media> medias) {
-        List<Media> medias2 = medias.stream()
+        List<Media> medias2 = PObjectUtils.defaultList(medias)
+                .stream()
                 .map(media -> media.withAccountId(accountId))
                 .toList();
 

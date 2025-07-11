@@ -1,6 +1,9 @@
 package com.paw.fund.core.service.bootstrap.utils;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 public class PObjectUtils {
     public static Boolean isNull(Object object) {
@@ -17,5 +20,9 @@ public class PObjectUtils {
 
     public static Boolean isNotEqual(Object object1, Object object2) {
         return !Objects.equals(object1, object2);
+    }
+
+    public static  <T>List<T> defaultList(List<T> list ) {
+        return Optional.of(list).orElse(new ArrayList<>());
     }
 }
