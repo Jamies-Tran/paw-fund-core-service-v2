@@ -9,6 +9,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -23,4 +24,7 @@ public interface IAccountsApi {
 
     @PatchMapping("/change-email")
     PValueResponse<?> updateEmail(@RequestBody @Valid VerificationRequest verificationRequest);
+
+    @PutMapping
+    PValueResponse<?> update(@RequestBody @Valid AccountRequest accountRequest);
 }

@@ -1,6 +1,7 @@
 package com.paw.fund.core.service.features.account.controller;
 
 import com.paw.fund.core.service.bootstrap.config.rest.PValueResponse;
+import com.paw.fund.core.service.domain.account.Account;
 import com.paw.fund.core.service.domain.account.IAccountUseCase;
 import com.paw.fund.core.service.domain.role.enums.ERole;
 import com.paw.fund.core.service.features.account.controller.models.AccountRequest;
@@ -17,11 +18,11 @@ import org.springframework.web.bind.annotation.RestController;
 public class AccountsController implements IAccountsApi {
     IAccountUseCase accountUseCase;
 
-    IAccountRequestModelMapper modelMapper;
+    IAccountRequestModelMapper requestModelMapper;
 
     @Override
     public PValueResponse<Long> saveStaff(AccountRequest accountRequest, Long shelterId) {
-        Long accountId = accountUseCase.save(modelMapper.toDto(accountRequest), ERole.SHELTER_OWNER);
+        Long accountId = accountUseCase.save(requestModelMapper.toDto(accountRequest), ERole.SHELTER_OWNER);
 
         return PValueResponse.success(accountId);
     }
@@ -29,6 +30,14 @@ public class AccountsController implements IAccountsApi {
     @Override
     public PValueResponse<?> updateEmail(VerificationRequest verificationRequest) {
         accountUseCase.updateEmail(verificationRequest.verification());
+
+        return PValueResponse.successNoData();
+    }
+
+    @Override
+    public PValueResponse<?> update(AccountRequest accountRequest) {
+        Account account = requestModelMapper.toDto(accountRequest);
+        accountUseCase.update(account);
 
         return PValueResponse.successNoData();
     }

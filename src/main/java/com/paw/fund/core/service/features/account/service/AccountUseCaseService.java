@@ -4,6 +4,8 @@ import com.paw.fund.core.service.bootstrap.config.handler.exception.PResourceNot
 import com.paw.fund.core.service.domain.account.Account;
 import com.paw.fund.core.service.domain.account.IAccountUseCase;
 import com.paw.fund.core.service.domain.account.enums.EAccountStatus;
+import com.paw.fund.core.service.domain.login.info.ILoginInfoUseCase;
+import com.paw.fund.core.service.domain.login.info.LoginAccount;
 import com.paw.fund.core.service.domain.media.IMediaUseCase;
 import com.paw.fund.core.service.domain.media.Media;
 import com.paw.fund.core.service.domain.media.MediaEventListener;
@@ -20,6 +22,7 @@ import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.lang.module.ResolutionException;
 import java.util.List;
 import java.util.Optional;
 
@@ -36,6 +39,8 @@ public class AccountUseCaseService implements IAccountUseCase {
     IMediaUseCase mediaUseCase;
 
     IRoleUseCase roleUseCase;
+
+    ILoginInfoUseCase loginInfoUseCase;
 
     @Override
     @Transactional
@@ -121,6 +126,14 @@ public class AccountUseCaseService implements IAccountUseCase {
     @Transactional
     public void update(@NonNull Long accountId, @NonNull Account account) {
         commandService.update(accountId, account);
+    }
+
+    @Override
+    @Transactional
+    public void update(@NonNull Account account) {
+        LoginAccount loginAccount = loginInfoUseCase.getCurrentAccountLogin()
+                .orElseThrow(ResolutionException::new);
+        commandService.update(loginAccount.accountId(), account);
     }
 
     @Override

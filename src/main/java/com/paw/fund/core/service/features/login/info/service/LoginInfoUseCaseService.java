@@ -25,6 +25,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -82,18 +83,19 @@ public class LoginInfoUseCaseService implements ILoginInfoUseCase {
 
     @Override
     @Transactional(readOnly = true)
-    public LoginAccount getCurrentAccountLogin() {
+    public Optional<LoginAccount> getCurrentAccountLogin() {
         SecurityContext securityContext = SecurityContextHolder.getContext();
 
         return queryService
                 .findLoginAccountByEmail((String) securityContext.getAuthentication().getPrincipal())
-                .orElse(null);
+                .map(account -> account.withRoles(roleUseCase.findAllByAccountId(account.accountId())));
     }
 
     @Override
     @Transactional
     public void logout() {
-        LoginAccount loginAccount = getCurrentAccountLogin();
+        LoginAccount loginAccount = getCurrentAccountLogin()
+                .orElseThrow(PResourceNotFoundException::new);
         commandService.updateStatus(loginAccount.accountId(), ELoginStatus.LOGOUT);
     }
 }

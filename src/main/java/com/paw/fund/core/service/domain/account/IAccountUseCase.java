@@ -26,4 +26,6 @@ public interface IAccountUseCase {
     void updateEmail(@NonNull String verificationCode);
 
     void update(@NonNull Long accountId, @NonNull Account account);
+
+    void update(@NonNull Account account);
 }
