@@ -18,5 +18,5 @@ public interface IAccountPubApi {
     PValueResponse<AccountResponse> findById(@PathVariable Long accountId);
 
     @PutMapping
-    PValueResponse<?> update(@PathVariable Long accountId,@RequestBody @Valid AccountRequest accountRequest);
+    PValueResponse<?> update(@PathVariable Long accountId, @RequestBody @Valid AccountRequest accountRequest);
 }
