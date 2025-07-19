@@ -10,7 +10,8 @@ import lombok.experimental.FieldDefaults;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public enum EAccountStatus {
     ACTIVE("ACTIVE", "Kích hoạt"),
-    INACTIVE("INACTIVE", "Chưa kích hoạt"),;
+    INACTIVE("INACTIVE", "Chưa kích hoạt"),
+    DISABLE("DISABLE", "Vô hiệu hóa");
 
     String code;
     String name;

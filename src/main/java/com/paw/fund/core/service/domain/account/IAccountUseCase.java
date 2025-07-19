@@ -17,7 +17,12 @@ public interface IAccountUseCase {
 
     void updateStatus(
             @NonNull String verificationCode,
-            @NonNull String mail,
+            @NonNull Long accountId,
+            @NonNull EAccountStatus status
+    );
+
+    void updateStatus(
+            @NonNull Long accountId,
             @NonNull EAccountStatus status
     );
 

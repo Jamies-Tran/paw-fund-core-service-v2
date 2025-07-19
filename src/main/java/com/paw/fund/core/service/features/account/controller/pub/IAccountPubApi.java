@@ -3,9 +3,11 @@ package com.paw.fund.core.service.features.account.controller.pub;
 import com.paw.fund.core.service.bootstrap.config.rest.PValueResponse;
 import com.paw.fund.core.service.features.account.controller.models.AccountRequest;
 import com.paw.fund.core.service.features.account.controller.models.AccountResponse;
+import com.paw.fund.core.service.features.account.controller.models.UpdateStatusRequest;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,4 +21,7 @@ public interface IAccountPubApi {
 
     @PutMapping
     PValueResponse<?> update(@PathVariable Long accountId, @RequestBody @Valid AccountRequest accountRequest);
+
+    @PatchMapping("/active")
+    PValueResponse<?> active(@PathVariable Long accountId, @RequestBody @Valid UpdateStatusRequest updateStatusRequest);
 }

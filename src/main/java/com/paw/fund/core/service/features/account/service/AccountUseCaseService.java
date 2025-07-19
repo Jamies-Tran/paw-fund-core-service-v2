@@ -109,17 +109,22 @@ public class AccountUseCaseService implements IAccountUseCase {
     @Transactional
     public void updateStatus(
             @NonNull String verificationCode,
-            @NonNull String email,
+            @NonNull Long accountId,
             @NonNull EAccountStatus status
     ) {
         if (!queryService.verifyCode(verificationCode)) {
             throw new PResourceNotFoundException("Mã xác nhận không đúng!");
         }
-        commandService.updateStatus(email, status);
+        commandService.updateStatus(accountId, status);
         publisher.publishEvent(new VerificationDeleteEventListener(
                 this,
                 verificationCode
         ));
+    }
+
+    @Override
+    public void updateStatus(@NonNull Long accountId, @NonNull EAccountStatus status) {
+        commandService.updateStatus(accountId, status);
     }
 
     @Override

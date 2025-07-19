@@ -33,8 +33,8 @@ public class AccountCommandService extends AccountQueryPrivateService {
         return entity.getAccountId();
     }
 
-    protected void updateStatus(@NonNull String email, @NonNull EAccountStatus status) {
-        repository.findByEmail(email)
+    protected void updateStatus(@NonNull Long accountId, @NonNull EAccountStatus status) {
+        repository.findById(accountId)
                 .ifPresentOrElse(
                         account -> {
                             account.setStatusCode(status.getCode());
@@ -50,7 +50,7 @@ public class AccountCommandService extends AccountQueryPrivateService {
                 .ifPresentOrElse(
                         account1 -> {
                             validateUpdate(account1, account);
-                            mapper.update(account1, account);
+                            mapper.updateWithEmail(account1, account);
                             repository.save(account1);
                         },
                         PResourceNotFoundException::new

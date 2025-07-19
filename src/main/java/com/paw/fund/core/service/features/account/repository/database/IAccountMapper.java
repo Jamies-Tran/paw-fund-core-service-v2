@@ -28,6 +28,9 @@ public interface IAccountMapper extends IEntityMapper<AccountEntity, Account> {
     @Mapping(target = "email", ignore = true)
     void update(@MappingTarget AccountEntity entity, Account dto);
 
+    @Mapping(target = "password", ignore = true)
+    void updateWithEmail(@MappingTarget AccountEntity entity, Account dto);
+
     @Named("encodePassword")
     default String encodePassword(String password) {
         return PPasswordEncoder.passwordEncoder().encode(password);

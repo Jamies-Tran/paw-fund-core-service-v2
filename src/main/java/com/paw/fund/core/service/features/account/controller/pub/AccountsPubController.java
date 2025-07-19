@@ -21,7 +21,6 @@ public class AccountsPubController implements IAccountsPubApi {
 
     IAccountRequestModelMapper modelMapper;
 
-
     @Override
     public PValueResponse<Long> saveShelterOwner(AccountRequest accountRequest) {
         Long accountId = accountUseCase.save(modelMapper.toDto(accountRequest), ERole.SHELTER_OWNER);
@@ -34,28 +33,6 @@ public class AccountsPubController implements IAccountsPubApi {
         Long accountId = accountUseCase.save(modelMapper.toDto(accountRequest), ERole.ADOPTER);
 
         return PValueResponse.success(accountId);
-    }
-
-    @Override
-    public PValueResponse<?> active(UpdateStatusRequest updateStatusRequest) {
-        accountUseCase.updateStatus(
-                updateStatusRequest.verificationCode(),
-                updateStatusRequest.email(),
-                EAccountStatus.ACTIVE
-        );
-
-        return PValueResponse.successNoData();
-    }
-
-    @Override
-    public PValueResponse<?> inactive(UpdateStatusRequest updateStatusRequest) {
-        accountUseCase.updateStatus(
-                updateStatusRequest.verificationCode(),
-                updateStatusRequest.email(),
-                EAccountStatus.INACTIVE
-        );
-
-        return PValueResponse.successNoData();
     }
 
     @Override

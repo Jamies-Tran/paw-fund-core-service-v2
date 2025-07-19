@@ -4,8 +4,10 @@ import com.paw.fund.core.service.bootstrap.config.handler.exception.PResourceNot
 import com.paw.fund.core.service.bootstrap.config.rest.PValueResponse;
 import com.paw.fund.core.service.domain.account.Account;
 import com.paw.fund.core.service.domain.account.IAccountUseCase;
+import com.paw.fund.core.service.domain.account.enums.EAccountStatus;
 import com.paw.fund.core.service.features.account.controller.models.AccountRequest;
 import com.paw.fund.core.service.features.account.controller.models.AccountResponse;
+import com.paw.fund.core.service.features.account.controller.models.UpdateStatusRequest;
 import com.paw.fund.core.service.features.account.controller.models.mapper.IAccountRequestModelMapper;
 import com.paw.fund.core.service.features.account.controller.models.mapper.IAccountResponseModelMapper;
 import lombok.AccessLevel;
@@ -35,6 +37,17 @@ public class AccountPubController implements IAccountPubApi {
     public PValueResponse<?> update(Long accountId, AccountRequest accountRequest) {
         Account account = requestModelMapper.toDto(accountRequest);
         accountUseCase.update(accountId, account);
+
+        return PValueResponse.successNoData();
+    }
+
+    @Override
+    public PValueResponse<?> active(Long accountId, UpdateStatusRequest updateStatusRequest) {
+        accountUseCase.updateStatus(
+                updateStatusRequest.verificationCode(),
+                accountId,
+                EAccountStatus.ACTIVE
+        );
 
         return PValueResponse.successNoData();
     }

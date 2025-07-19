@@ -21,12 +21,6 @@ public interface IAccountsPubApi {
     @PostMapping("/adopter")
     PValueResponse<Long> saveAdopter(@RequestBody @Valid AccountRequest accountRequest);
 
-    @PatchMapping("/active")
-    PValueResponse<?> active(@RequestBody @Valid UpdateStatusRequest updateStatusRequest);
-
-    @PatchMapping("/in-active")
-    PValueResponse<?> inactive(@RequestBody @Valid UpdateStatusRequest updateStatusRequest);
-
     @PatchMapping("/change-password")
     PValueResponse<?> changePassword(@RequestBody @Valid UpdatePasswordRequest updatePasswordRequest);
 }
