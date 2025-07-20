@@ -45,7 +45,7 @@ public class SecurityConfiguration {
         CorsConfiguration cors = new CorsConfiguration();
         cors.addAllowedHeader("*");
         cors.addAllowedMethod("*");
-        cors.addAllowedOrigin("*");
+        cors.addAllowedOriginPattern("*");
         cors.addAllowedHeader("X-Delete-Key");
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", cors);
