@@ -14,4 +14,7 @@ public record LoginAccount(
         String statusCode,
         @With List<Role> roles
 ) {
+    public static LoginAccount empty() {
+        return LoginAccount.builder().build();
+    }
 }

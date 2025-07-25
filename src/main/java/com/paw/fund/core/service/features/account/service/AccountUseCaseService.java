@@ -9,7 +9,7 @@ import com.paw.fund.core.service.domain.login.info.LoginAccount;
 import com.paw.fund.core.service.domain.media.IMediaUseCase;
 import com.paw.fund.core.service.domain.media.Media;
 import com.paw.fund.core.service.domain.media.MediaEventListener;
-import com.paw.fund.core.service.domain.relation.account.role.AccountRoleEventListener;
+import com.paw.fund.core.service.domain.account.role.AccountRoleEventListener;
 import com.paw.fund.core.service.domain.role.IRoleUseCase;
 import com.paw.fund.core.service.domain.role.Role;
 import com.paw.fund.core.service.domain.role.enums.ERole;
