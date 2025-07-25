@@ -2,18 +2,18 @@ package com.paw.fund.core.service.features.account.service;
 
 import com.paw.fund.core.service.bootstrap.config.handler.exception.PResourceNotFoundException;
 import com.paw.fund.core.service.domain.account.Account;
+import com.paw.fund.core.service.domain.account.AccountPrivateService;
 import com.paw.fund.core.service.domain.account.IAccountUseCase;
 import com.paw.fund.core.service.domain.account.enums.EAccountStatus;
 import com.paw.fund.core.service.domain.login.info.ILoginInfoUseCase;
 import com.paw.fund.core.service.domain.login.info.LoginAccount;
 import com.paw.fund.core.service.domain.media.IMediaUseCase;
 import com.paw.fund.core.service.domain.media.Media;
-import com.paw.fund.core.service.domain.media.MediaEventListener;
-import com.paw.fund.core.service.domain.account.role.AccountRoleEventListener;
 import com.paw.fund.core.service.domain.role.IRoleUseCase;
 import com.paw.fund.core.service.domain.role.Role;
 import com.paw.fund.core.service.domain.role.enums.ERole;
 import com.paw.fund.core.service.domain.verification.VerificationDeleteEventListener;
+import com.paw.fund.core.service.domain.verification.enums.EVerificationType;
 import lombok.AccessLevel;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -29,36 +29,18 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-public class AccountUseCaseService implements IAccountUseCase {
+public class AccountUseCaseService extends AccountPrivateService
+        implements IAccountUseCase {
     AccountCommandService commandService;
 
     AccountQueryService queryService;
-
-    ApplicationEventPublisher publisher;
-
-    IMediaUseCase mediaUseCase;
-
-    IRoleUseCase roleUseCase;
-
-    ILoginInfoUseCase loginInfoUseCase;
 
     @Override
     @Transactional
     public Long save(@NonNull Account account, @NonNull ERole role,@NonNull Long shelterId) {
         Long accountId = commandService.save(account);
-
-        publisher.publishEvent(new MediaEventListener(
-                this,
-                accountId,
-                account.medias()
-        ));
-
-        publisher.publishEvent(new AccountRoleEventListener(
-                this,
-                accountId,
-                shelterId,
-                role.getCode()
-        ));
+        saveMedia(accountId, account.medias());
+        saveAccountRole(accountId, shelterId, role);
 
         return accountId;
     }
@@ -67,18 +49,8 @@ public class AccountUseCaseService implements IAccountUseCase {
     @Transactional
     public Long save(@NonNull Account account, @NonNull ERole role) {
         Long accountId = commandService.save(account);
-
-        publisher.publishEvent(new MediaEventListener(
-                this,
-                accountId,
-                account.medias()
-        ));
-
-        publisher.publishEvent(new AccountRoleEventListener(
-                this,
-                accountId,
-                role.getCode()
-        ));
+        saveMedia(accountId, account.medias());
+        saveAccountRole(accountId, role);
 
         return accountId;
     }
@@ -88,7 +60,7 @@ public class AccountUseCaseService implements IAccountUseCase {
     public Optional<Account> findByEmail(@NonNull String email) {
         return queryService.findByEmail(email)
                 .map(account -> {
-                    List<Role> roles = roleUseCase.findAllByAccountId(account.accountId());
+                    List<Role> roles = roles(account.accountId());
                     return account.withRoles(roles);
                 });
     }
@@ -98,8 +70,8 @@ public class AccountUseCaseService implements IAccountUseCase {
     public Optional<Account> findByAccountId(@NonNull Long accountId) {
         return queryService.findById(accountId)
                 .map(account -> {
-                    List<Media> medias = mediaUseCase.findAllByAccountId(account.accountId());
-                    List<Role> roles = roleUseCase.findAllByAccountId(account.accountId());
+                    List<Media> medias = medias(account.accountId());
+                    List<Role> roles = roles(account.accountId());
 
                     return account.withMedias(medias).withRoles(roles);
                 });
@@ -112,14 +84,11 @@ public class AccountUseCaseService implements IAccountUseCase {
             @NonNull Long accountId,
             @NonNull EAccountStatus status
     ) {
-        if (!queryService.verifyCode(verificationCode)) {
+        if (!queryService.verifyCode(accountId, verificationCode, EVerificationType.ACCOUNT_CREATION)) {
             throw new PResourceNotFoundException("Mã xác nhận không đúng!");
         }
         commandService.updateStatus(accountId, status);
-        publisher.publishEvent(new VerificationDeleteEventListener(
-                this,
-                verificationCode
-        ));
+        deleteVerification(verificationCode);
     }
 
     @Override
@@ -136,28 +105,21 @@ public class AccountUseCaseService implements IAccountUseCase {
     @Override
     @Transactional
     public void update(@NonNull Account account) {
-        LoginAccount loginAccount = loginInfoUseCase.getCurrentAccountLogin()
-                .orElseThrow(ResolutionException::new);
-        commandService.update(loginAccount.accountId(), account);
+
+        commandService.update(loginAccount().accountId(), account);
     }
 
     @Override
     @Transactional
     public void updatePassword(@NonNull String verificationCode, @NonNull String newPassword) {
         commandService.updatePassword(verificationCode, newPassword);
-        publisher.publishEvent(new VerificationDeleteEventListener(
-                this,
-                verificationCode
-        ));
+        deleteVerification(verificationCode);
     }
 
     @Override
     @Transactional
     public void updateEmail(@NonNull String verificationCode) {
         commandService.updateEmail(verificationCode);
-        publisher.publishEvent(new VerificationDeleteEventListener(
-                this,
-                verificationCode
-        ));
+        deleteVerification(verificationCode);
     }
 }

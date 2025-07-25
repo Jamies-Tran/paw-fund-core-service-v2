@@ -23,8 +23,9 @@ public interface IAccountRepository extends JpaRepository<AccountEntity, Long> {
         WHERE v.expiredAt > CURRENT_TIMESTAMP
             AND v.code = :verificationCode
             AND v.typeCode = :#{#verificationType.getCode()}
+            AND v.accountId = :accountId
     """)
-    Boolean existsByVerificationCode(String verificationCode, EVerificationType verificationType);
+    Boolean existsByVerificationCode(Long accountId, String verificationCode, EVerificationType verificationType);
 
     @Query("""
         SELECT a

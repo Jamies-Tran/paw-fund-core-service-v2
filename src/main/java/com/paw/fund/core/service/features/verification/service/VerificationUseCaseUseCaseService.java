@@ -102,8 +102,7 @@ public class VerificationUseCaseUseCaseService
 
     @Override
     @Transactional
-    @EventListener
-    public void delete(@NonNull VerificationDeleteEventListener eventListener) {
-        commandService.delete(eventListener.getVerificationCode());
+    public void delete(@NonNull String verificationCode) {
+        commandService.delete(verificationCode);
     }
 }

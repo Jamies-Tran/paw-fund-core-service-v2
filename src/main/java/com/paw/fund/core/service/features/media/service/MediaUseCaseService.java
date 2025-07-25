@@ -2,7 +2,6 @@ package com.paw.fund.core.service.features.media.service;
 
 import com.paw.fund.core.service.domain.media.IMediaUseCase;
 import com.paw.fund.core.service.domain.media.Media;
-import com.paw.fund.core.service.domain.media.MediaEventListener;
 import lombok.AccessLevel;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -23,9 +22,8 @@ public class MediaUseCaseService implements IMediaUseCase {
 
     @Override
     @Transactional
-    @EventListener
-    public void saveAll(@NonNull MediaEventListener eventListener) {
-        commandService.saveAll(eventListener.getAccountId(), eventListener.getMedias());
+    public void saveAll(@NonNull Long accountId, List<Media> medias) {
+        commandService.saveAll(accountId, medias);
     }
 
     @Override

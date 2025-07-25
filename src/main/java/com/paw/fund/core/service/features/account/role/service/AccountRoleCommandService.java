@@ -18,10 +18,11 @@ public class AccountRoleCommandService {
 
     IAccountRoleMapper mapper;
 
-    protected Long save(@NonNull Long accountId, @NonNull Long roleId) {
+    protected Long save(@NonNull Long accountId, @NonNull Long roleId, Long shelterId) {
         AccountRole accountRole = AccountRole.builder()
                 .accountId(accountId)
                 .roleId(roleId)
+                .shelterId(shelterId)
                 .build();
         AccountRoleEntity save = mapper.toEntity(accountRole);
         repository.save(save);

@@ -1,11 +1,12 @@
 package com.paw.fund.core.service.features.account.role.service;
 
 import com.paw.fund.core.service.bootstrap.config.handler.exception.PResourceNotFoundException;
-import com.paw.fund.core.service.domain.account.role.AccountRoleEventListener;
+import com.paw.fund.core.service.domain.account.role.AccountRolePrivateService;
 import com.paw.fund.core.service.domain.account.role.IAccountRoleUseCase;
 
 import com.paw.fund.core.service.domain.role.IRoleUseCase;
 import com.paw.fund.core.service.domain.role.Role;
+import com.paw.fund.core.service.domain.role.enums.ERole;
 import lombok.AccessLevel;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -17,18 +18,15 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-public class AccountRoleUseCaseService implements IAccountRoleUseCase {
+public class AccountRoleUseCaseService extends AccountRolePrivateService
+        implements IAccountRoleUseCase {
     AccountRoleCommandService commandService;
-
-    IRoleUseCase roleUseCase;
 
     @Override
     @Transactional
-    @EventListener
-    public Long save(@NonNull AccountRoleEventListener eventListener) {
-        Role role = roleUseCase.findByCode(eventListener.getRoleCode())
-                .orElseThrow(PResourceNotFoundException::new);
+    public Long save(@NonNull Long accountId, @NonNull ERole role, Long shelterId) {
+        Role foundRole = role(role.getCode());
 
-        return commandService.save(eventListener.getAccountId(), role.roleId());
+        return commandService.save(accountId, foundRole.roleId(), shelterId);
     }
 }

@@ -5,7 +5,7 @@ import com.paw.fund.core.service.bootstrap.config.handler.exception.PResourceNot
 import com.paw.fund.core.service.bootstrap.utils.PObjectUtils;
 import com.paw.fund.core.service.bootstrap.utils.PPasswordEncoder;
 import com.paw.fund.core.service.domain.account.Account;
-import com.paw.fund.core.service.domain.account.AccountQueryPrivateService;
+import com.paw.fund.core.service.domain.account.AccountCommandPrivateService;
 import com.paw.fund.core.service.domain.account.enums.EAccountStatus;
 import com.paw.fund.core.service.domain.verification.enums.EVerificationType;
 import com.paw.fund.core.service.features.account.repository.database.AccountEntity;
@@ -20,7 +20,7 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-public class AccountCommandService extends AccountQueryPrivateService {
+public class AccountCommandService extends AccountCommandPrivateService {
     IAccountRepository repository;
 
     IAccountMapper mapper;

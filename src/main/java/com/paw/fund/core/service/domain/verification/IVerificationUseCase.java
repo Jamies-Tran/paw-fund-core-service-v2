@@ -8,5 +8,5 @@ public interface IVerificationUseCase {
 
     void save(@NonNull String email,@NonNull String newEmail, @NonNull EVerificationType verificationType);
 
-    void delete(@NonNull VerificationDeleteEventListener verificationDeleteEventListener);
+    void delete(@NonNull String verificationCode);
 }

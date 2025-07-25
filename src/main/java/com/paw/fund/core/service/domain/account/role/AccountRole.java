@@ -6,6 +6,7 @@ import lombok.Builder;
 public record AccountRole(
         Long accountRoleId,
         Long accountId,
+        Long shelterId,
         Long roleId
 ) {
 }

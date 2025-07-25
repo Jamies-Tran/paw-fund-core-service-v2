@@ -24,8 +24,12 @@ public class AccountQueryService {
                 .map(mapper::toDto);
     }
 
-    protected Boolean verifyCode(String verificationCode) {
-        return repository.existsByVerificationCode(verificationCode, EVerificationType.ACCOUNT_CREATION);
+    protected Boolean verifyCode(Long accountId, String verificationCode, EVerificationType verificationType) {
+        return repository.existsByVerificationCode(
+                accountId,
+                verificationCode,
+                verificationType
+        );
     }
 
     protected Optional<Account> findById(Long accountId) {

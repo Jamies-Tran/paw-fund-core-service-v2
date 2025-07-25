@@ -5,7 +5,7 @@ import lombok.NonNull;
 import java.util.List;
 
 public interface IMediaUseCase {
-    void saveAll(@NonNull MediaEventListener eventListener);
+    void saveAll(@NonNull Long accountId, List<Media> medias);
 
     List<Media> findAllByAccountId(@NonNull Long accountId);
 }

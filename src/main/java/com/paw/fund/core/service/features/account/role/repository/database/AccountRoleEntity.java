@@ -31,4 +31,7 @@ public class AccountRoleEntity extends Auditor {
 
     @Column
     Long accountId;
+
+    @Column
+    Long shelterId;
 }
