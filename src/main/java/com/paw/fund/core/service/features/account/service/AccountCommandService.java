@@ -6,7 +6,7 @@ import com.paw.fund.core.service.bootstrap.utils.PObjectUtils;
 import com.paw.fund.core.service.bootstrap.utils.PPasswordEncoder;
 import com.paw.fund.core.service.domain.account.Account;
 import com.paw.fund.core.service.domain.account.AccountCommandPrivateService;
-import com.paw.fund.core.service.domain.account.enums.EAccountStatus;
+import com.paw.fund.core.service.enums.account.EAccountStatus;
 import com.paw.fund.core.service.domain.verification.enums.EVerificationType;
 import com.paw.fund.core.service.features.account.repository.database.AccountEntity;
 import com.paw.fund.core.service.features.account.repository.database.IAccountMapper;

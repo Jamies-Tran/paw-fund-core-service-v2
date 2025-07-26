@@ -4,7 +4,7 @@ import com.paw.fund.core.service.bootstrap.config.handler.exception.PResourceNot
 import com.paw.fund.core.service.bootstrap.config.rest.PValueResponse;
 import com.paw.fund.core.service.domain.account.Account;
 import com.paw.fund.core.service.domain.account.IAccountUseCase;
-import com.paw.fund.core.service.domain.account.enums.EAccountStatus;
+import com.paw.fund.core.service.enums.account.EAccountStatus;
 import com.paw.fund.core.service.features.account.controller.models.AccountRequest;
 import com.paw.fund.core.service.features.account.controller.models.AccountResponse;
 import com.paw.fund.core.service.features.account.controller.models.UpdateStatusRequest;

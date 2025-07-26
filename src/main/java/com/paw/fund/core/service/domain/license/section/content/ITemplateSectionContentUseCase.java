@@ -7,5 +7,5 @@ public interface ITemplateSectionContentUseCase {
 
     List<TemplateSectionContent> findAllByLicenseTemplateSectionIdIn(List<Long> licenseTemplateSectionIds);
 
-    void deleteAllByLicenseTemplateSectionIdIn(List<Long> licenseTemplateSectionIds);
+    void update(Long licenseTemplateSectionId, List<TemplateSectionContent> contents);
 }

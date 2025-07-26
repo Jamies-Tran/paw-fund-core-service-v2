@@ -53,3 +53,5 @@ app:
 paw:
   verification:
     duration: 15
+  timeRange:
+    distance: 1

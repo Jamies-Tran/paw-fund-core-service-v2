@@ -25,8 +25,16 @@ public class LicenseTemplateSectionEntity extends Auditor {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long licenseTemplateSectionId;
+
     @Column
     Long licenseTemplateId;
+
     @Column
     String sectionTitle;
+
+    @Column
+    String statusCode;
+
+    @Column
+    String statusName;
 }

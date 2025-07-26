@@ -1,6 +1,6 @@
 package com.paw.fund.core.service.domain.account;
 
-import com.paw.fund.core.service.domain.account.enums.EAccountStatus;
+import com.paw.fund.core.service.enums.account.EAccountStatus;
 import com.paw.fund.core.service.domain.role.enums.ERole;
 import lombok.NonNull;
 

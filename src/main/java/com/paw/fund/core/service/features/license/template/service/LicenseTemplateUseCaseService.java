@@ -22,7 +22,7 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-public class LicenseTemplateService extends LicenseTemplatePrivateService
+public class LicenseTemplateUseCaseService extends LicenseTemplatePrivateService
         implements ILicenseTemplateUseCase {
     LicenseTemplateCommandService commandService;
 
@@ -45,6 +45,7 @@ public class LicenseTemplateService extends LicenseTemplatePrivateService
     @Override
     @Transactional
     public void update(Long licenseTemplateId, LicenseTemplate licenseTemplate) {
+        updateSections(licenseTemplateId, licenseTemplate);
         commandService.update(licenseTemplateId, licenseTemplate);
     }
 

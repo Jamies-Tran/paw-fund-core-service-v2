@@ -31,7 +31,14 @@ public interface ILicenseTemplateRepository extends JpaRepository<LicenseTemplat
                 OR lt.statusCode IN :#{#searchCriteria.statusCodes()})
             AND (:#{#searchCriteria.licenseTypeCodes().empty} = TRUE
                 OR lt.licenseTypeCode IN :#{#searchCriteria.licenseTypeCodes()})
-            
     """)
     Page<LicenseTemplateEntity> findAll(LicenseTemplateCriteria searchCriteria, Pageable pageable);
+
+    @Query("""
+        SELECT COUNT(lt) > 0
+        FROM LicenseTemplateEntity lt
+        INNER JOIN AccountLicenseEntity al ON lt.licenseTemplateId = al.licenseTemplateId
+            WHERE lt.licenseTemplateId = :licenseTemplateId
+    """)
+    Boolean existsInAccountLicense(Long licenseTemplateId);
 }

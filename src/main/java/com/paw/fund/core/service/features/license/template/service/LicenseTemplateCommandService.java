@@ -1,6 +1,7 @@
 package com.paw.fund.core.service.features.license.template.service;
 
 import com.paw.fund.core.service.bootstrap.config.handler.exception.PResourceNotFoundException;
+import com.paw.fund.core.service.bootstrap.config.handler.exception.PResourceNotValid;
 import com.paw.fund.core.service.bootstrap.utils.PSpringContext;
 import com.paw.fund.core.service.domain.license.section.ILicenseTemplateSectionUseCase;
 import com.paw.fund.core.service.domain.license.template.LicenseTemplate;
@@ -33,15 +34,18 @@ public class LicenseTemplateCommandService {
     }
 
     protected void update(Long licenseTemplateId, LicenseTemplate licenseTemplate) {
-        ILicenseTemplateSectionUseCase sectionUseCase = PSpringContext.getBean(ILicenseTemplateSectionUseCase.class);
+        if (repository.existsInAccountLicense(licenseTemplateId)) {
+            throw new PResourceNotValid();
+        }
         repository.findById(licenseTemplateId)
                 .ifPresentOrElse(
                         license -> {
                             mapper.update(license, licenseTemplate);
                             repository.save(license);
-                            sectionUseCase.update(license.getLicenseTemplateId(), licenseTemplate.sections());
                         },
-                        PResourceNotFoundException::new
+                        () -> {
+                            throw new PResourceNotFoundException();
+                        }
                 );
     }
 

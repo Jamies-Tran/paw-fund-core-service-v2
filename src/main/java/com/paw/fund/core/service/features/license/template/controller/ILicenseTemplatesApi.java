@@ -23,7 +23,7 @@ public interface ILicenseTemplatesApi {
     @PostMapping @PreAuthorize("hasRole('ROLE_ADMIN')")
     PValueResponse<Long> save(@RequestBody @Valid LicenseTemplateRequest request);
 
-    @GetMapping("/findAll")
+    @GetMapping("/all")
     PPageResponse<LicenseTemplateResponse> findAll(
             @RequestParam(required = false, value = "search", defaultValue = "") String search,
             @RequestParam(required = false, value = "timeRange", defaultValue = "") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) List<LocalDateTime> timeRange,

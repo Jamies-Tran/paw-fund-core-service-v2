@@ -5,7 +5,7 @@ import com.paw.fund.core.service.bootstrap.config.handler.exception.PResourceNot
 import com.paw.fund.core.service.bootstrap.utils.PObjectUtils;
 import com.paw.fund.core.service.bootstrap.utils.PPasswordEncoder;
 import com.paw.fund.core.service.bootstrap.utils.PTokenUtils;
-import com.paw.fund.core.service.domain.account.enums.EAccountStatus;
+import com.paw.fund.core.service.enums.account.EAccountStatus;
 import com.paw.fund.core.service.domain.login.info.ILoginInfoUseCase;
 import com.paw.fund.core.service.domain.login.info.LoginAccount;
 import com.paw.fund.core.service.domain.login.info.LoginInfo;

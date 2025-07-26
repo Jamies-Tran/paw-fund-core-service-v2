@@ -28,6 +28,10 @@ public class PObjectUtils {
         return object == null;
     }
 
+    public static Boolean isNotNull(Object object) {
+        return object != null;
+    }
+
     public static Boolean isEmpty(String objectStr) {
         return objectStr == "" || objectStr == null;
     }

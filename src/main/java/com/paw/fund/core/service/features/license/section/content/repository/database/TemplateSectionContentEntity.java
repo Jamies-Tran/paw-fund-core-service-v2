@@ -24,8 +24,16 @@ public class TemplateSectionContentEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long templateSectionContentId;
+
     @Column
     Long licenseTemplateSectionId;
+
     @Column
     String content;
+
+    @Column
+    String statusCode;
+
+    @Column
+    String statusName;
 }

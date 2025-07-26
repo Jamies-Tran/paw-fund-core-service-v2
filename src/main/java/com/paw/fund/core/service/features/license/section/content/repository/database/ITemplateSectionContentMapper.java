@@ -3,6 +3,7 @@ package com.paw.fund.core.service.features.license.section.content.repository.da
 import com.paw.fund.core.service.bootstrap.config.mapper.IEntityMapper;
 import com.paw.fund.core.service.domain.license.section.content.TemplateSectionContent;
 import org.mapstruct.Mapper;
+import org.mapstruct.MappingTarget;
 
 @Mapper(
         componentModel = "spring",
@@ -10,4 +11,5 @@ import org.mapstruct.Mapper;
         nullValuePropertyMappingStrategy = org.mapstruct.NullValuePropertyMappingStrategy.IGNORE
 )
 public interface ITemplateSectionContentMapper extends IEntityMapper<TemplateSectionContentEntity, TemplateSectionContent> {
+    void update(@MappingTarget TemplateSectionContentEntity entity, TemplateSectionContent dto);
 }

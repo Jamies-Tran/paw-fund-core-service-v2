@@ -1,4 +1,4 @@
-package com.paw.fund.core.service.domain.account.enums;
+package com.paw.fund.core.service.enums;
 
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -8,10 +8,9 @@ import lombok.experimental.FieldDefaults;
 @Getter
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-public enum EAccountStatus {
-    ACTIVE("ACTIVE", "Kích hoạt"),
-    INACTIVE("INACTIVE", "Chưa kích hoạt"),
-    DISABLE("DISABLE", "Vô hiệu hóa");
+
+public enum EEnableStatus {
+    ENABLED("ENABLED", "Kích hoạt"),;
 
     String code;
     String name;

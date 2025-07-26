@@ -2,7 +2,7 @@ package com.paw.fund.core.service.features.account.controller;
 
 import com.paw.fund.core.service.bootstrap.config.rest.PValueResponse;
 import com.paw.fund.core.service.domain.account.IAccountUseCase;
-import com.paw.fund.core.service.domain.account.enums.EAccountStatus;
+import com.paw.fund.core.service.enums.account.EAccountStatus;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;

@@ -32,7 +32,8 @@ public class TemplateSectionContentUseCaseService implements ITemplateSectionCon
 
     @Override
     @Transactional
-    public void deleteAllByLicenseTemplateSectionIdIn(List<Long> licenseTemplateSectionIds) {
-        commandService.deleteAllByLicenseTemplateSectionIdIn(licenseTemplateSectionIds);
+    public void update(Long licenseTemplateSectionId, List<TemplateSectionContent> contents) {
+        commandService.update(licenseTemplateSectionId, contents);
     }
+
 }

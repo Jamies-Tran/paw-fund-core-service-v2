@@ -4,25 +4,18 @@ import com.paw.fund.core.service.bootstrap.config.handler.exception.PResourceNot
 import com.paw.fund.core.service.domain.account.Account;
 import com.paw.fund.core.service.domain.account.AccountPrivateService;
 import com.paw.fund.core.service.domain.account.IAccountUseCase;
-import com.paw.fund.core.service.domain.account.enums.EAccountStatus;
-import com.paw.fund.core.service.domain.login.info.ILoginInfoUseCase;
-import com.paw.fund.core.service.domain.login.info.LoginAccount;
-import com.paw.fund.core.service.domain.media.IMediaUseCase;
+import com.paw.fund.core.service.enums.account.EAccountStatus;
 import com.paw.fund.core.service.domain.media.Media;
-import com.paw.fund.core.service.domain.role.IRoleUseCase;
 import com.paw.fund.core.service.domain.role.Role;
 import com.paw.fund.core.service.domain.role.enums.ERole;
-import com.paw.fund.core.service.domain.verification.VerificationDeleteEventListener;
 import com.paw.fund.core.service.domain.verification.enums.EVerificationType;
 import lombok.AccessLevel;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.lang.module.ResolutionException;
 import java.util.List;
 import java.util.Optional;
 

@@ -23,4 +23,8 @@ public abstract class LicenseTemplatePrivateService {
     protected List<LicenseTemplateSection> licenseTemplateSections(Long licenseTemplateId) {
         return sectionUseCase.findAllByLicenseTemplateId(licenseTemplateId);
     }
+
+    protected void updateSections(Long licenseTemplateId, LicenseTemplate licenseTemplate) {
+        sectionUseCase.update(licenseTemplateId, licenseTemplate.sections());
+    }
 }

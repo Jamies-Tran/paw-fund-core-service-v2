@@ -3,15 +3,13 @@ package com.paw.fund.core.service.features.account.repository.database;
 import com.paw.fund.core.service.bootstrap.config.mapper.IEntityMapper;
 import com.paw.fund.core.service.bootstrap.utils.PPasswordEncoder;
 import com.paw.fund.core.service.domain.account.Account;
-import com.paw.fund.core.service.domain.account.enums.EAccountStatus;
+import com.paw.fund.core.service.enums.account.EAccountStatus;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.Named;
 import org.mapstruct.NullValuePropertyMappingStrategy;
 import org.mapstruct.ReportingPolicy;
-
-import java.util.List;
 
 @Mapper(
         componentModel = "spring",
