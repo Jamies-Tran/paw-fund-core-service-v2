@@ -51,3 +51,5 @@ app:
 paw:
   verification:
     duration: ${PAW_VERIFICATION_DURATION}
+  timeRange:
+    distance: ${PAW_TIME_RANGE_DISTANCE}
