@@ -41,4 +41,12 @@ public interface ILicenseTemplateRepository extends JpaRepository<LicenseTemplat
             WHERE lt.licenseTemplateId = :licenseTemplateId
     """)
     Boolean existsInAccountLicense(Long licenseTemplateId);
+
+    @Query("""
+        SELECT COUNT(lt) > 0
+        FROM LicenseTemplateEntity lt
+        WHERE lt.statusCode = :#{T(com.paw.fund.core.service.enums.license.template.ELicenseTemplateStatus).ENABLED.getCode()}
+            AND lt.licenseTypeCode = :licenseTypeCode
+    """)
+    Boolean existsByLicenseTypeCode(String licenseTypeCode);
 }

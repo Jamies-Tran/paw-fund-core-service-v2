@@ -1,4 +1,4 @@
-package com.paw.fund.core.service.domain.media.enums;
+package com.paw.fund.core.service.enums.media;
 
 import com.paw.fund.core.service.bootstrap.utils.PObjectUtils;
 import lombok.AccessLevel;

@@ -8,6 +8,12 @@ public record AccountLicenseContentResponse(
         Long accountLicenseId,
         Long templateSectionContentId,
         String sectionContent,
-        String content
+        LicenseContentResponse content
 ) {
+    public record LicenseContentResponse(
+            String sectionContent,
+            String licenseTemplateContent,
+            String licenseContent
+    ) {
+    }
 }

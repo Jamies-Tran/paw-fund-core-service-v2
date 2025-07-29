@@ -31,7 +31,10 @@ public class LicenseTemplateUseCaseService extends LicenseTemplatePrivateService
     @Override
     @Transactional
     public Long save(LicenseTemplate licenseTemplate) {
-        return commandService.save(licenseTemplate);
+        Long licenseTemplateId = commandService.save(licenseTemplate);
+        saveSections(licenseTemplateId, licenseTemplate.sections());
+
+        return licenseTemplateId;
     }
 
     @Override

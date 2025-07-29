@@ -1,6 +1,7 @@
 package com.paw.fund.core.service.features.account.license.repository.database;
 
 import com.paw.fund.core.service.bootstrap.config.auditor.Auditor;
+import com.paw.fund.core.service.domain.media.info.MediaInfoList;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -13,6 +14,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.FieldDefaults;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.annotations.Type;
+import org.hibernate.type.SqlTypes;
 
 import java.time.LocalDateTime;
 
@@ -48,4 +52,8 @@ public class AccountLicenseEntity extends Auditor {
 
     @Column
     String statusName;
+
+    @JdbcTypeCode(SqlTypes.JSON)
+    @Column(columnDefinition = "json")
+    MediaInfoList media;
 }

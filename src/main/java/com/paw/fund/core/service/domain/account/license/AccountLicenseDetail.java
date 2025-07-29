@@ -4,6 +4,7 @@ import com.paw.fund.core.service.domain.account.license.content.AccountLicenseCo
 import com.paw.fund.core.service.domain.license.section.LicenseTemplateSection;
 import com.paw.fund.core.service.domain.license.section.content.TemplateSectionContent;
 import com.paw.fund.core.service.domain.license.template.LicenseTemplate;
+import com.paw.fund.core.service.domain.media.info.MediaInfoList;
 import lombok.Builder;
 
 import java.util.List;
@@ -16,6 +17,7 @@ public record AccountLicenseDetail(
         Long licenseTemplateId,
         String title,
         String description,
+        MediaInfoList media,
         List<LicenseSectionDetail> sections
 ) {
 
@@ -30,23 +32,35 @@ public record AccountLicenseDetail(
                 Long accountLicenseContentId,
                 Long templateSectionContentId,
                 String sectionContent,
-                String licenseContent
+                List<ContentDetail> contents
         ) {
+            @Builder
+            public record ContentDetail(
+                    Long accountLicenseContentId,
+                    String licenseTemplateContent,
+                    String licenseContent
+            ) {
 
-            public static List<SectionContentDetail> from(List<TemplateSectionContent> sectionContents, List<AccountLicenseContent> contents) {
-                Map<Long, AccountLicenseContent> contents1 = contents.stream()
-                        .collect(Collectors.toMap(AccountLicenseContent::templateSectionContentId, ac -> ac));
-                return sectionContents.stream()
-                        .map(sectionContent -> {
+            }
 
-                            AccountLicenseContent contents2 = contents1
-                                    .computeIfAbsent(sectionContent.templateSectionContentId(), sc
-                                            -> AccountLicenseContent.builder().build());
+            public static List<SectionContentDetail> from( List<AccountLicenseContent> contents) {
+                Map<String, List<AccountLicenseContent>> contentMap = contents
+                        .stream()
+                        .collect(Collectors.groupingBy(content -> content.content().sectionContent()));
+                return contentMap.entrySet()
+                        .stream()
+                        .map(entry -> {
+                            List<ContentDetail> contentList = entry.getValue()
+                                    .stream()
+                                    .map(content1 -> ContentDetail.builder()
+                                            .accountLicenseContentId(content1.accountLicenseContentId())
+                                            .licenseContent(content1.content().licenseContent())
+                                            .licenseTemplateContent(content1.content().licenseTemplateContent())
+                                            .build())
+                                    .toList();
                             return SectionContentDetail.builder()
-                                    .sectionContent(sectionContent.content())
-                                    .licenseContent(contents2.content())
-                                    .accountLicenseContentId(contents2.accountLicenseContentId())
-                                    .templateSectionContentId(sectionContent.templateSectionContentId())
+                                    .sectionContent(entry.getKey())
+                                    .contents(contentList)
                                     .build();
                         })
                         .toList();
@@ -58,7 +72,7 @@ public record AccountLicenseDetail(
                     .map(templateSection -> LicenseSectionDetail.builder()
                             .licenseTemplateSectionId(templateSection.licenseTemplateSectionId())
                             .sectionTitle(templateSection.sectionTitle())
-                            .contents(SectionContentDetail.from(templateSection.contents(), contents))
+                            .contents(SectionContentDetail.from(contents))
                             .build())
                     .toList();
         }
@@ -70,6 +84,7 @@ public record AccountLicenseDetail(
                 .licenseTemplateId(licenseTemplate.licenseTemplateId())
                 .title(licenseTemplate.title())
                 .description(licenseTemplate.description())
+                .media(accountLicense.media())
                 .sections(LicenseSectionDetail.from(licenseTemplate.sections(), accountLicense.contents()))
                 .build();
     }

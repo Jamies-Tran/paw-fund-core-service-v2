@@ -9,6 +9,12 @@ public record AccountLicenseContentRequest(
         @NotNull(message = "Thiếu thông tin phần nội dung của giấy phép")
         Long templateSectionContentId,
         @NotNull(message = "Vui lòng nhập thông tin giấy phép")
-        String content
+        LicenseContentRequest content
 ) {
+        public record LicenseContentRequest(
+                String sectionContent,
+                String licenseTemplateContent,
+                String licenseContent
+        ) {
+        }
 }

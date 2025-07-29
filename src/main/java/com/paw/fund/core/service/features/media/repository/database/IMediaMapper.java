@@ -2,7 +2,7 @@ package com.paw.fund.core.service.features.media.repository.database;
 
 import com.paw.fund.core.service.bootstrap.config.mapper.IEntityMapper;
 import com.paw.fund.core.service.domain.media.Media;
-import com.paw.fund.core.service.domain.media.enums.EMimeType;
+import com.paw.fund.core.service.enums.media.EMimeType;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;

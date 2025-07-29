@@ -27,4 +27,8 @@ public abstract class LicenseTemplatePrivateService {
     protected void updateSections(Long licenseTemplateId, LicenseTemplate licenseTemplate) {
         sectionUseCase.update(licenseTemplateId, licenseTemplate.sections());
     }
+
+    protected void saveSections(Long licenseTemplateId, List<LicenseTemplateSection> sections) {
+        sectionUseCase.save(licenseTemplateId, sections);
+    }
 }

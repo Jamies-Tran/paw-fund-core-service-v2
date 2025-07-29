@@ -2,6 +2,7 @@ package com.paw.fund.core.service.domain.account.license;
 
 import com.paw.fund.core.service.bootstrap.utils.PObjectUtils;
 import com.paw.fund.core.service.domain.account.license.content.AccountLicenseContent;
+import com.paw.fund.core.service.domain.media.info.MediaInfoList;
 import com.paw.fund.core.service.enums.account.license.EAccountLicenseStatus;
 import jakarta.persistence.Column;
 import lombok.Builder;
@@ -20,6 +21,7 @@ public record AccountLicense (
         LocalDateTime issueDate,
         String statusCode,
         String statusName,
+        MediaInfoList media,
         @With List<AccountLicenseContent> contents
 ) {
     public AccountLicense {

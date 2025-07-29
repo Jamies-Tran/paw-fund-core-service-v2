@@ -1,5 +1,7 @@
 package com.paw.fund.core.service.features.account.license.controller.models;
 
+import com.paw.fund.core.service.domain.account.license.AccountLicenseDetail;
+import com.paw.fund.core.service.domain.media.info.MediaInfoList;
 import lombok.Builder;
 
 import java.util.List;
@@ -10,6 +12,7 @@ public record AccountLicenseDetailResponse(
         Long licenseTemplateId,
         String title,
         String description,
+        MediaInfoList media,
         List<LicenseSectionDetailResponse> sections
 ) {
     public record LicenseSectionDetailResponse(
@@ -18,10 +21,16 @@ public record AccountLicenseDetailResponse(
             List<SectionContentDetailResponse> contents
     ) {
         public record SectionContentDetailResponse(
-                Long accountLicenseContentId,
-                Long templateSectionContentId,
                 String sectionContent,
-                String licenseContent
-        ) {}
+                List<ContentDetailResponse> contents
+        ) {
+            public record ContentDetailResponse(
+                    Long accountLicenseContentId,
+                    String licenseTemplateContent,
+                    String licenseContent
+            ) {
+
+            }
+        }
     }
 }
