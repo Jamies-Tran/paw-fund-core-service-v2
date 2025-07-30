@@ -16,6 +16,8 @@ public record AccountLicense (
         Long accountLicenseId,
         Long licenseTemplateId,
         @With Long accountId,
+        String title,
+        String description,
         String licenseNumber,
         LocalDateTime expiryDate,
         LocalDateTime issueDate,

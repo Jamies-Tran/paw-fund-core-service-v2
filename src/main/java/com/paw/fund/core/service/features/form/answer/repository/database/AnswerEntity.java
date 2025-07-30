@@ -1,7 +1,7 @@
-package com.paw.fund.core.service.features.account.license.repository.database;
+package com.paw.fund.core.service.features.form.answer.repository.database;
 
 import com.paw.fund.core.service.bootstrap.config.auditor.Auditor;
-import com.paw.fund.core.service.domain.media.info.MediaInfoList;
+import com.paw.fund.core.service.domain.form.answer.Answer;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -15,43 +15,28 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.FieldDefaults;
 import org.hibernate.annotations.JdbcTypeCode;
-import org.hibernate.annotations.Type;
 import org.hibernate.type.SqlTypes;
-
-import java.time.LocalDateTime;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "account_license")
+@Table(name = "answers")
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class AccountLicenseEntity extends Auditor {
+public class AnswerEntity extends Auditor {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long accountLicenseId;
+    Long answerId;
 
     @Column
-    Long licenseTemplateId;
+    Long formReplyId;
 
     @Column
-    Long accountId;
+    Long questionId;
 
     @Column
-    String title;
-
-    @Column
-    String description;
-
-    @Column
-    String licenseNumber;
-
-    @Column
-    LocalDateTime expiryDate;
-
-    @Column
-    LocalDateTime issueDate;
+    String answerText;
 
     @Column
     String statusCode;
@@ -61,5 +46,5 @@ public class AccountLicenseEntity extends Auditor {
 
     @JdbcTypeCode(SqlTypes.JSON)
     @Column(columnDefinition = "json")
-    MediaInfoList media;
+    Answer.AnswerContent content;
 }

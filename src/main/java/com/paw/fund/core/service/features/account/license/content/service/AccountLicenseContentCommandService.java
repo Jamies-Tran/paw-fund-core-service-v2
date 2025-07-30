@@ -45,6 +45,7 @@ public class AccountLicenseContentCommandService {
                 });
         repository.saveAll(mapper.toEntity(contents.stream()
                 .filter(content -> PObjectUtils.isNull(content.accountLicenseContentId()))
+                .map(content -> content.withAccountLicenseId(accountLicenseId))
                 .toList()));
     }
 }

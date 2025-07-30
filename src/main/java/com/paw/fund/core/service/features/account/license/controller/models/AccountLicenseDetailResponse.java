@@ -13,24 +13,18 @@ public record AccountLicenseDetailResponse(
         String title,
         String description,
         MediaInfoList media,
-        List<LicenseSectionDetailResponse> sections
+        List<SectionContentDetailResponse> licenseContent
 ) {
-    public record LicenseSectionDetailResponse(
-            Long licenseTemplateSectionId,
-            String sectionTitle,
-            List<SectionContentDetailResponse> contents
+    public record SectionContentDetailResponse(
+            String sectionContent,
+            List<ContentDetailResponse> contents
     ) {
-        public record SectionContentDetailResponse(
-                String sectionContent,
-                List<ContentDetailResponse> contents
+        public record ContentDetailResponse(
+                Long accountLicenseContentId,
+                String licenseTemplateContent,
+                String licenseContent
         ) {
-            public record ContentDetailResponse(
-                    Long accountLicenseContentId,
-                    String licenseTemplateContent,
-                    String licenseContent
-            ) {
 
-            }
         }
     }
 }

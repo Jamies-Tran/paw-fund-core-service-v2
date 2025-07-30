@@ -2,7 +2,6 @@ package com.paw.fund.core.service.domain.account.license;
 
 import com.paw.fund.core.service.domain.account.license.content.AccountLicenseContent;
 import com.paw.fund.core.service.domain.license.section.LicenseTemplateSection;
-import com.paw.fund.core.service.domain.license.section.content.TemplateSectionContent;
 import com.paw.fund.core.service.domain.license.template.LicenseTemplate;
 import com.paw.fund.core.service.domain.media.info.MediaInfoList;
 import lombok.Builder;
@@ -18,74 +17,54 @@ public record AccountLicenseDetail(
         String title,
         String description,
         MediaInfoList media,
-        List<LicenseSectionDetail> sections
+        List<SectionContentDetail> licenseContent
 ) {
+    public static List<SectionContentDetail> of(List<AccountLicenseContent> contents) {
+        return SectionContentDetail.ContentDetail.of(contents)
+                .stream()
+                .collect(Collectors.groupingBy(SectionContentDetail.ContentDetail::sectionContent))
+                .entrySet()
+                .stream()
+                .map(entry -> SectionContentDetail.builder()
+                        .sectionContent(entry.getKey())
+                        .contents(entry.getValue())
+                        .build())
+                .toList();
+    }
 
     @Builder
-    public record LicenseSectionDetail(
-            Long licenseTemplateSectionId,
-            String sectionTitle,
-            List<SectionContentDetail> contents
+    public record SectionContentDetail(
+            String sectionContent,
+            List<ContentDetail> contents
     ) {
         @Builder
-        public record SectionContentDetail(
+        public record ContentDetail(
                 Long accountLicenseContentId,
-                Long templateSectionContentId,
                 String sectionContent,
-                List<ContentDetail> contents
+                String licenseTemplateContent,
+                String licenseContent
         ) {
-            @Builder
-            public record ContentDetail(
-                    Long accountLicenseContentId,
-                    String licenseTemplateContent,
-                    String licenseContent
-            ) {
-
-            }
-
-            public static List<SectionContentDetail> from( List<AccountLicenseContent> contents) {
-                Map<String, List<AccountLicenseContent>> contentMap = contents
-                        .stream()
-                        .collect(Collectors.groupingBy(content -> content.content().sectionContent()));
-                return contentMap.entrySet()
-                        .stream()
-                        .map(entry -> {
-                            List<ContentDetail> contentList = entry.getValue()
-                                    .stream()
-                                    .map(content1 -> ContentDetail.builder()
-                                            .accountLicenseContentId(content1.accountLicenseContentId())
-                                            .licenseContent(content1.content().licenseContent())
-                                            .licenseTemplateContent(content1.content().licenseTemplateContent())
-                                            .build())
-                                    .toList();
-                            return SectionContentDetail.builder()
-                                    .sectionContent(entry.getKey())
-                                    .contents(contentList)
-                                    .build();
-                        })
+            public static List<ContentDetail> of(List<AccountLicenseContent> contents) {
+                return contents.stream()
+                        .map(content -> ContentDetail.builder()
+                                .accountLicenseContentId(content.accountLicenseContentId())
+                                .sectionContent(content.content().sectionContent())
+                                .licenseTemplateContent(content.content().licenseTemplateContent())
+                                .licenseContent(content.content().licenseContent())
+                                .build())
                         .toList();
             }
 
         }
-        public static List<LicenseSectionDetail> from(List<LicenseTemplateSection> templateSections, List<AccountLicenseContent> contents) {
-            return templateSections.stream()
-                    .map(templateSection -> LicenseSectionDetail.builder()
-                            .licenseTemplateSectionId(templateSection.licenseTemplateSectionId())
-                            .sectionTitle(templateSection.sectionTitle())
-                            .contents(SectionContentDetail.from(contents))
-                            .build())
-                    .toList();
-        }
     }
 
-    public static AccountLicenseDetail from(LicenseTemplate licenseTemplate, AccountLicense accountLicense) {
+    public static AccountLicenseDetail of(AccountLicense accountLicense) {
         return AccountLicenseDetail.builder()
                 .accountLicenseId(accountLicense.accountLicenseId())
-                .licenseTemplateId(licenseTemplate.licenseTemplateId())
-                .title(licenseTemplate.title())
-                .description(licenseTemplate.description())
+                .title(accountLicense.title())
+                .description(accountLicense.description())
                 .media(accountLicense.media())
-                .sections(LicenseSectionDetail.from(licenseTemplate.sections(), accountLicense.contents()))
+                .licenseContent(AccountLicenseDetail.of(accountLicense.contents()))
                 .build();
     }
 }

@@ -43,7 +43,7 @@ public class AccountLicenseUseCaseService extends AccountLicensePrivateService
     @Transactional(readOnly = true)
     public Optional<AccountLicenseDetail> findById(Long accountLicenseId) {
         return queryService.findById(accountLicenseId)
-                .map(accountLicense -> AccountLicenseDetail.from(licenseTemplate(accountLicense.licenseTemplateId()), accountLicense
+                .map(accountLicense -> AccountLicenseDetail.of(accountLicense
                             .withContents(contents(accountLicense.accountLicenseId()))));
     }
 

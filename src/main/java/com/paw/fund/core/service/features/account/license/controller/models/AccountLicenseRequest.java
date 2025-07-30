@@ -11,6 +11,8 @@ import java.util.List;
 public record AccountLicenseRequest(
         Long licenseTemplateId,
         String licenseNumber,
+        String title,
+        String description,
         LocalDateTime expiryDate,
         LocalDateTime issueDate,
         MediaInfoRequest media,
