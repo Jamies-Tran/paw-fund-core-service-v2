@@ -5,9 +5,6 @@ import lombok.Builder;
 
 @Builder
 public record AccountLicenseContentRequest(
-        Long accountLicenseContentId,
-        @NotNull(message = "Thiếu thông tin phần nội dung của giấy phép")
-        Long templateSectionContentId,
         @NotNull(message = "Vui lòng nhập thông tin giấy phép")
         LicenseContentRequest content
 ) {

@@ -7,7 +7,6 @@ import java.util.List;
 
 @Builder
 public record LicenseTemplateSectionRequest(
-        Long licenseTemplateSectionId,
         String sectionTitle,
         List<TemplateSectionContentRequest> contents
 ) {

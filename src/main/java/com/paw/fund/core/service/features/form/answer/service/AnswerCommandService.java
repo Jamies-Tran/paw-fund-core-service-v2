@@ -28,25 +28,9 @@ public class AnswerCommandService {
     }
 
     protected void update(Long formReplyId, List<Answer> answers) {
-        Map<Long, Answer> answerMap = answers.stream()
-                .filter(a -> PObjectUtils.isNotNull(a.answerId()))
-                .collect(Collectors.toMap(Answer::answerId, a -> a));
+        repository.deleteAll(repository.findAllByFormReplyId(formReplyId));
 
-        repository.findAllByFormReplyId(formReplyId)
-                .forEach(answer -> {
-                    if (answerMap.containsKey(answer.getAnswerId())) {
-                        mapper.update(answer, answerMap.get(answer.getAnswerId()));
-                        repository.save(answer);
-                    } else {
-                        answer.setStatusCode(EDeleteStatus.DELETED.getCode());
-                        answer.setStatusName(EDeleteStatus.DELETED.getName());
-                        repository.save(answer);
-                    }
-                });
-
-        repository.saveAll(mapper.toEntity(answers.stream()
-                .filter(answer -> PObjectUtils.isNull(answer.answerId()))
-                .map(answer -> answer.withFormReplyId(formReplyId))
-                .toList()));
+        repository.saveAll(mapper.toEntity(answers.stream().map(answer -> answer
+                .withFormReplyId(formReplyId)).toList()));
     }
 }

@@ -32,9 +32,6 @@ public class AccountLicenseContentEntity extends Auditor {
     @Column
     Long accountLicenseId;
 
-    @Column
-    Long templateSectionContentId;
-
     @JdbcTypeCode(SqlTypes.JSON)
     @Column(columnDefinition = "json")
     AccountLicenseContent.LicenseContent content;

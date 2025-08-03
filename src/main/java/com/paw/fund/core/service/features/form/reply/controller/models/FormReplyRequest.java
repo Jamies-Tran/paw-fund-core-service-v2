@@ -7,7 +7,6 @@ import java.util.List;
 
 @Builder
 public record FormReplyRequest(
-        Long formId,
         String title,
         String description,
         List<AnswerRequest> answers

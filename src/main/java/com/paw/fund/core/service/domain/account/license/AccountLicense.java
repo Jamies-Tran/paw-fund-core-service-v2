@@ -14,7 +14,6 @@ import java.util.List;
 @Builder
 public record AccountLicense (
         Long accountLicenseId,
-        Long licenseTemplateId,
         @With Long accountId,
         String title,
         String description,

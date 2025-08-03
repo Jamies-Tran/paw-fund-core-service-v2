@@ -29,9 +29,6 @@ public class LicenseTemplateCommandService {
     }
 
     protected void update(Long licenseTemplateId, LicenseTemplate licenseTemplate) {
-        if (repository.existsInAccountLicense(licenseTemplateId)) {
-            throw new PResourceNotValid();
-        }
         repository.findById(licenseTemplateId)
                 .ifPresentOrElse(
                         license -> {
@@ -59,9 +56,6 @@ public class LicenseTemplateCommandService {
     }
 
     protected void delete(Long licenseTemplateId) {
-        if (repository.existsInAccountLicense(licenseTemplateId)) {
-            throw new PResourceNotValid();
-        }
         repository.findById(licenseTemplateId)
                 .ifPresentOrElse(
                         template -> {

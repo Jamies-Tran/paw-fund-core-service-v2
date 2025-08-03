@@ -1,0 +1,18 @@
+package com.paw.fund.core.service.enums.form;
+
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
+
+@Getter
+@RequiredArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
+public enum EQuestionType {
+    SINGLE_CHOICE("SINGLE_CHOICE", "Câu hỏi trắc nghiệm (một lựa chọn)"),
+    MULTIPLE_CHOICE("MULTIPLE_CHOICE", "Câu hỏi trắc nghiệm (nhiều lựa chọn)"),
+    ESSAY("ESSAY", "Câu hỏi tự luận"),;
+
+    String code;
+    String name;
+}

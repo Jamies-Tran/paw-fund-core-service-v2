@@ -6,7 +6,6 @@ import lombok.With;
 
 @Builder
 public record OptionRequest(
-        Long optionId,
         @NotNull(message = "Vui lòng nhập thông tin lựa chọn")
         String optionText
 ) {

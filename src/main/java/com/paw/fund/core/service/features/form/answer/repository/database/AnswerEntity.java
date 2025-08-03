@@ -33,12 +33,6 @@ public class AnswerEntity extends Auditor {
     Long formReplyId;
 
     @Column
-    Long questionId;
-
-    @Column
-    String answerText;
-
-    @Column
     String statusCode;
 
     @Column
@@ -46,5 +40,5 @@ public class AnswerEntity extends Auditor {
 
     @JdbcTypeCode(SqlTypes.JSON)
     @Column(columnDefinition = "json")
-    Answer.AnswerContent content;
+    Answer.AnswerContent answerContent;
 }

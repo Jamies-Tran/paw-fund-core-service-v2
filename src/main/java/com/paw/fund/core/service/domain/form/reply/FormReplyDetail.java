@@ -10,18 +10,18 @@ public record FormReplyDetail(
         Long formReplyId,
         String title,
         String description,
-        List<AnswerDetail> answers
+        List<AnswerDetail> answerContent
 ) {
     @Builder
     public record AnswerDetail(
             String questionText,
-            String answerText
+            List<String> answerTexts
     ) {
         public static List<AnswerDetail> of(List<Answer> answers) {
             return answers.stream()
                     .map(answer -> AnswerDetail.builder()
-                            .questionText(answer.answer().questionText())
-                            .answerText(answer.answer().answerText())
+                            .questionText(answer.answerContent().questionText())
+                            .answerTexts(answer.answerContent().answerTexts())
                             .build())
                     .toList();
         }
@@ -32,7 +32,7 @@ public record FormReplyDetail(
                 .formReplyId(formReply.formReplyId())
                 .title(formReply.title())
                 .description(formReply.description())
-                .answers(AnswerDetail.of(formReply.answers()))
+                .answerContent(AnswerDetail.of(formReply.answers()))
                 .build();
     }
 }

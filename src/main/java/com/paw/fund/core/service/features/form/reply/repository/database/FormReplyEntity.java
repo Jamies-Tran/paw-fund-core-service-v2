@@ -30,9 +30,6 @@ public class FormReplyEntity extends Auditor {
     Long accountId;
 
     @Column
-    Long formId;
-
-    @Column
     String title;
 
     @Column

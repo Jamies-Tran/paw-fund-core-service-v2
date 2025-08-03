@@ -29,22 +29,9 @@ public class AccountLicenseContentCommandService {
     }
 
     protected void update(Long accountLicenseId, List<AccountLicenseContent> contents) {
-        Map<Long, AccountLicenseContent> contentMap = contents.stream()
-                .filter(content -> PObjectUtils.isNotNull(content.accountLicenseContentId()))
-                .collect(Collectors.toMap(AccountLicenseContent::accountLicenseContentId, content -> content));
-        repository.findAllByAccountLicenseId(accountLicenseId)
-                .forEach(foundContent -> {
-                    if (contentMap.containsKey(foundContent.getAccountLicenseContentId())) {
-                        mapper.update(foundContent, contentMap.get(foundContent.getAccountLicenseContentId()));
-                        repository.save(foundContent);
-                    } else {
-                        foundContent.setStatusCode(EDeleteStatus.DELETED.getCode());
-                        foundContent.setStatusName(EDeleteStatus.DELETED.getName());
-                        repository.save(foundContent);
-                    }
-                });
+        repository.deleteAll(repository.findAllByAccountLicenseId(accountLicenseId));
+
         repository.saveAll(mapper.toEntity(contents.stream()
-                .filter(content -> PObjectUtils.isNull(content.accountLicenseContentId()))
                 .map(content -> content.withAccountLicenseId(accountLicenseId))
                 .toList()));
     }

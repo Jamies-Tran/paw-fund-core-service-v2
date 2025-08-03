@@ -6,7 +6,6 @@ import lombok.Builder;
 public record FormReplyResponse(
         Long formReplyId,
         Long accountId,
-        Long formId,
         String title,
         String description
 ) {

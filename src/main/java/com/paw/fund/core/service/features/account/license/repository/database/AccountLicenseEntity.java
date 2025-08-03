@@ -33,9 +33,6 @@ public class AccountLicenseEntity extends Auditor {
     Long accountLicenseId;
 
     @Column
-    Long licenseTemplateId;
-
-    @Column
     Long accountId;
 
     @Column

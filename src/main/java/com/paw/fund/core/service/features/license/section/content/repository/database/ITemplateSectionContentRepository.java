@@ -17,4 +17,6 @@ public interface ITemplateSectionContentRepository extends JpaRepository<Templat
     List<TemplateSectionContentEntity> findAllByLicenseTemplateSectionIdIn(List<Long> ids);
 
     List<TemplateSectionContentEntity> findAllByLicenseTemplateSectionId(Long id);
+
+    void deleteAllByLicenseTemplateSectionIdIn(List<Long> licenseTemplateSectionIds);
 }

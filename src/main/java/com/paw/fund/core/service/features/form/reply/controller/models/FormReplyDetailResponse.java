@@ -9,11 +9,11 @@ public record FormReplyDetailResponse(
         Long formReplyId,
         String title,
         String description,
-        List<AnswerDetailResponse> answers
+        List<AnswerDetailResponse> answerContent
 ) {
     @Builder
     public record AnswerDetailResponse(
             String questionText,
-            String answerText
+            List<String> answerTexts
     ) {}
 }

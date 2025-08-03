@@ -8,7 +8,6 @@ import lombok.With;
 import java.util.List;
 
 public record QuestionRequest(
-        Long questionId,
         @NotNull(message = "Vui lòng nhập nội dung câu hỏi")
         String questionText,
         @NotNull(message = "Vui lòng chọn loại câu hỏi")
